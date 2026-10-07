@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090714">
+<title>For Asjad Raza — A Birthday Experience</title>
+<meta name="description" content="A premium interactive birthday experience made especially for Asjad Raza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060d;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.13);
+  --text:#f8f5ff;--muted:#aaa5b8;--gold:#e9c878;--pink:#ff7ca8;
+  --violet:#9d7bff;--cyan:#78d8ff;--shadow:0 30px 90px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;overflow-x:hidden;background:radial-gradient(circle at 15% 10%,#26143b 0,transparent 32%),radial-gradient(circle at 90% 30%,#171c4b 0,transparent 30%),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;z-index:-2}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+canvas{display:block;max-width:100%}
+#intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;place-items:safe center;overflow-y:auto;overscroll-behavior:contain;background:#05040a;transition:opacity 1s,visibility 1s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-card{text-align:center;width:min(680px,90%);padding:40px}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;font-size:.7rem;color:var(--gold);font-weight:700}
+.intro-card h1{font-family:"Cormorant Garamond",serif;font-size:clamp(4rem,12vw,8rem);line-height:.82;margin:22px 0}
+.intro-card p{color:var(--muted);max-width:470px;margin:0 auto 28px;line-height:1.7}
+.gold-btn{border:1px solid rgba(233,200,120,.6);background:linear-gradient(135deg,#e9c878,#b98a2e);color:#160f05;padding:14px 23px;border-radius:999px;font-weight:800;cursor:pointer;box-shadow:0 15px 45px rgba(233,200,120,.2);transition:.3s}
+.gold-btn:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(233,200,120,.3)}
+nav{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(1080px,92%);z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 20px;border:1px solid var(--line);background:rgba(7,6,13,.62);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-radius:999px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:700}.logo span{color:var(--gold)}
+.navlinks{display:flex;gap:18px;color:#cbc7d2;font-size:.78rem}.navlinks a:hover{color:white}
+.music{border:1px solid var(--line);background:rgba(255,255,255,.06);color:white;padding:9px 13px;border-radius:99px;cursor:pointer}
+section{width:min(1120px,92%);max-width:100%;margin:auto;padding:105px 0;overflow:visible}
+.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding-top:140px;position:relative}
+.hero .orb{position:absolute;width:min(460px,90vw);height:min(460px,90vw);border-radius:50%;filter:blur(55px);opacity:.25;background:linear-gradient(135deg,var(--pink),var(--violet));animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.13);opacity:.35}}
+.hero-content{position:relative}
+.hero h2{font-family:"Cormorant Garamond",serif;font-size:clamp(5rem,16vw,11rem);line-height:.9;letter-spacing:-.04em;padding:.05em .04em .12em;background:linear-gradient(110deg,#fff,#e9c878 45%,#ff9fc0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero .sub{margin:30px auto 10px;font-size:clamp(1rem,2vw,1.2rem);color:#d4cfda}
+.hero .small{color:var(--muted);font-size:.85rem}
+.scroll{margin-top:55px;display:inline-flex;flex-direction:column;gap:8px;color:#8f899b;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}.scroll i{height:48px;width:1px;background:linear-gradient(var(--gold),transparent);margin:auto}
+.section-head{margin-bottom:36px}.section-head .eyebrow{margin-bottom:10px}.section-head h3{font-family:"Cormorant Garamond",serif;font-size:clamp(2.5rem,5vw,4.5rem);line-height:.95}.section-head p{color:var(--muted);max-width:610px;margin-top:14px;line-height:1.7}
+.glass{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));box-shadow:var(--shadow);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:28px}
+.letter{padding:clamp(25px,5vw,58px);position:relative;overflow:hidden}
+.letter:after{content:"“";position:absolute;right:30px;top:-45px;font-family:serif;font-size:16rem;color:rgba(233,200,120,.07)}
+.letter h4{font-family:"Cormorant Garamond",serif;font-size:2.2rem;color:var(--gold);margin-bottom:15px}.letter p{font-family:"Cormorant Garamond",serif;font-size:clamp(1.35rem,2.7vw,1.8rem);line-height:1.55;color:#eee9f1}.signature{margin-top:25px;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.2em}
+.memories{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.memory{min-height:270px;grid-column:span 4;overflow:hidden;position:relative;border-radius:22px;border:1px solid var(--line);background:#17131e}.memory:nth-child(1){grid-column:span 7}.memory:nth-child(2){grid-column:span 5}.memory:nth-child(3){grid-column:span 5}.memory:nth-child(4){grid-column:span 7}
+.memory img{width:100%;height:100%;object-fit:cover;opacity:.72;transition:.6s}.memory:hover img{transform:scale(1.06);opacity:.9}.memory .caption{position:absolute;left:18px;right:18px;bottom:16px;padding:14px;border-radius:16px;background:rgba(5,4,10,.58);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.caption b{font-family:"Cormorant Garamond",serif;font-size:1.4rem}.caption span{display:block;color:#c0bac7;font-size:.75rem;margin-top:3px}
+.timeline{position:relative;padding-left:30px}.timeline:before{content:"";position:absolute;left:6px;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--gold),transparent)}.event{position:relative;margin:0 0 30px;padding:23px 24px}.event:before{content:"";position:absolute;left:-30px;top:30px;width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(233,200,120,.1)}.event b{color:var(--gold);font-size:.75rem;letter-spacing:.15em}.event h4{font-family:"Cormorant Garamond",serif;font-size:1.8rem;margin:5px 0}.event p{color:var(--muted);line-height:1.6}
+.count-card{padding:30px;text-align:center}.count-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:25px}.time{padding:18px 10px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line)}.time strong{display:block;font-size:2.2rem;font-family:"Cormorant Garamond",serif}.time span{color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em}
+.cake-wrap{display:grid;place-items:center;padding:55px 20px;min-height:500px;position:relative}.cake{position:relative;width:260px;height:210px;margin:0 auto;filter:drop-shadow(0 25px 30px rgba(0,0,0,.5));cursor:pointer;transition:.5s}@media(hover:hover){.cake:hover{transform:translateY(-7px)}}.tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:18px 18px 10px 10px;background:linear-gradient(#ff9fc0,#d94d7c);box-shadow:inset 0 10px 20px rgba(255,255,255,.2)}.tier.top{top:65px;width:150px;height:55px}.tier.mid{top:105px;width:205px;height:70px}.tier.bottom{top:145px;width:260px;height:65px}.cream{position:absolute;top:72px;left:50%;transform:translateX(-50%);width:158px;height:16px;border-radius:50%;background:#fff4f7;z-index:3}.candle{position:absolute;z-index:5;top:15px;width:12px;height:55px;border-radius:5px;background:repeating-linear-gradient(135deg,#fff 0 7px,#9d7bff 7px 14px)}.c1{left:92px}.c2{left:124px}.c3{left:156px}.flame{position:absolute;top:-15px;left:1px;width:10px;height:15px;background:#ffd76b;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 18px #ffb83d;animation:flicker .25s infinite alternate}.out .flame{display:none}@keyframes flicker{to{transform:rotate(-45deg) scale(1.15);opacity:.8}}.cake-note{text-align:center;color:var(--muted);margin-top:30px}
+.gift{padding:50px;text-align:center}.giftbox{margin:20px auto 30px;width:170px;height:130px;position:relative;cursor:pointer;transition:.5s}.giftbox:hover{transform:translateY(-8px) rotate(-2deg)}.box{position:absolute;left:15px;right:15px;bottom:0;height:95px;background:linear-gradient(135deg,#b99235,#f2d278);border-radius:8px}.lid{position:absolute;left:5px;right:5px;top:25px;height:28px;background:#f0d278;border-radius:7px;z-index:2}.ribbon-v{position:absolute;left:50%;top:0;bottom:0;width:24px;transform:translateX(-50%);background:#8c1e4b;z-index:3}.bow{position:absolute;top:2px;left:50%;width:48px;height:35px;transform:translateX(-50%);z-index:4}.bow:before,.bow:after{content:"";position:absolute;width:28px;height:25px;border:8px solid #8c1e4b;border-radius:50% 50% 0 50%;}.bow:before{left:-25px;transform:rotate(25deg)}.bow:after{right:-25px;transform:scaleX(-1) rotate(25deg)}.reveal{max-height:0;overflow:hidden;transition:1s}.reveal.open{max-height:900px}.reveal p{max-width:680px;margin:0 auto;color:#ded8e2;line-height:1.8}.quote{font-family:"Cormorant Garamond",serif;font-size:2rem;color:var(--gold);margin:15px 0}
+.reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.reason{padding:27px;min-height:180px}.reason .num{font-family:"Cormorant Garamond",serif;font-size:2.5rem;color:var(--gold)}.reason h4{margin:8px 0;font-size:1rem}.reason p{color:var(--muted);font-size:.85rem;line-height:1.6}
+.footer{text-align:center;padding:100px 20px 50px}.footer h3{font-family:"Cormorant Garamond",serif;font-size:clamp(3.5rem,9vw,7rem);line-height:.85}.footer p{color:var(--muted);margin:20px 0}.mini{font-size:.7rem;color:#716c78;letter-spacing:.12em;text-transform:uppercase}
+#toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;z-index:80;background:#fff;color:#120d16;padding:13px 20px;border-radius:999px;font-weight:700;transition:.4s;pointer-events:none}.toast-show{opacity:1!important;transform:translate(-50%,0)!important}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:70}
+@media(max-width:700px){
+ body{font-size:15px}
+ .glass{border-radius:22px}
+ .hero{min-height:100svh;width:100%;padding-left:5vw;padding-right:5vw}
+ section{width:90%;padding:70px 0}
+
+ nav{top:calc(10px + env(safe-area-inset-top,0px))}.navlinks{display:none}.hero{padding-top:120px}.hero h2{font-size:clamp(4rem,19vw,7rem);max-width:100%;overflow-wrap:break-word}
+ section{padding:80px 0}.memories{display:grid;grid-template-columns:1fr 1fr}.memory,.memory:nth-child(n){grid-column:span 1;min-height:190px}.memory:first-child{grid-column:span 2}
+ .cake-wrap{min-height:380px;padding:40px 10px}
+ .reasons{grid-template-columns:1fr}.count-grid{gap:6px}.time{padding:13px 5px}.time strong{font-size:1.7rem}.letter{padding:28px}.gift{padding:35px 20px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+section[id]{scroll-margin-top:90px}
+.hero{min-height:100vh;min-height:100dvh}
+.memory{background:linear-gradient(135deg,#2a1a47,#14132e)}
+.memory img{position:absolute;inset:0}
+.memory .caption{z-index:2}
+body.locked{overflow:hidden}
+.cake,.giftbox{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,.cake:focus-visible,.giftbox:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.music{white-space:nowrap;min-height:40px}
+#toast{bottom:calc(25px + env(safe-area-inset-bottom,0px));max-width:90vw;text-align:center}
+@media(hover:none){.giftbox:hover,.gold-btn:hover{transform:none}}
+@media(max-width:700px){.eyebrow{letter-spacing:.18em}.intro-card{padding:24px 6px}.intro-card h1{font-size:clamp(3.4rem,17vw,5rem)}.section-head h3{font-size:clamp(2.2rem,10vw,3rem)}.timeline{padding-left:26px}.event{padding:20px}.event:before{left:-26px}.footer{padding:70px 16px 40px}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas><canvas id="confetti"></canvas>
+
+<div id="intro">
+  <div class="intro-card">
+    <div class="eyebrow">A private celebration • 07.10.2026</div>
+    <h1>For Asjad<br>Raza.</h1>
+    <p>Someone made this little corner of the internet just for you. There is a cake, a surprise, a few memories, and one very important message waiting inside.</p>
+    <button class="gold-btn" id="enter">Open Your Birthday Experience ✦</button>
+  </div>
+</div>
+
+<nav>
+  <a class="logo" href="#top">A<span>R</span> ✦</a>
+  <div class="navlinks">
+    <a href="#letter">Letter</a><a href="#memories">Memories</a><a href="#journey">Journey</a><a href="#cake">Cake</a><a href="#surprise">Surprise</a>
+  </div>
+  <button class="music" id="musicBtn">♪ Sound Off</button>
+</nav>
+
+<main id="top">
+<section class="hero">
+  <div class="orb"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Today is about you</div>
+    <h2>Asjad<br>Raza</h2>
+    <p class="sub">Happy Birthday, legend. 🥂</p>
+    <p class="small">May this year be bigger than every dream you have kept to yourself.</p>
+    <a class="scroll" href="#letter">Scroll to begin <i></i></a>
+  </div>
+</section>
+
+<section id="letter">
+  <div class="section-head"><div class="eyebrow">01 — The message</div><h3>A few words<br>from the heart.</h3></div>
+  <div class="glass letter">
+    <h4>Dear Asjad,</h4>
+    <p>Happy Birthday! Some people make ordinary days feel a little brighter simply by being around — and you are one of those people. I hope this new chapter brings you unforgettable moments, genuine happiness, big wins, and the courage to chase everything you want.</p>
+    <p style="margin-top:18px">Keep being the person who laughs loudly, dreams boldly, and makes the people around him feel valued. Here's to more adventures, more inside jokes, more success, and a year that gives you plenty of reasons to say: <em>“That was one hell of a year.”</em></p>
+    <div class="signature">Made specially for Asjad Raza · With respect & friendship</div>
+  </div>
+</section>
+
+<section id="memories">
+  <div class="section-head"><div class="eyebrow">02 — The gallery</div><h3>Moments worth<br>keeping.</h3><p>A few frames for the moments that matter, and plenty more still to come.</p></div>
+  <div class="memories">
+    <div class="memory"><img alt="" loading="lazy" decoding="async" onerror="this.remove()" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1000&q=85"><div class="caption"><b>The good times</b><span>Some moments don't need an explanation.</span></div></div>
+    <div class="memory"><img alt="" loading="lazy" decoding="async" onerror="this.remove()" src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=85"><div class="caption"><b>Good people</b><span>The real ones make every memory better.</span></div></div>
+    <div class="memory"><img alt="" loading="lazy" decoding="async" onerror="this.remove()" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=85"><div class="caption"><b>Unforgettable</b><span>Here’s to making many more.</span></div></div>
+    <div class="memory"><img alt="" loading="lazy" decoding="async" onerror="this.remove()" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=85"><div class="caption"><b>Always a story</b><span>Because the best memories happen together.</span></div></div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="section-head"><div class="eyebrow">03 — The journey</div><h3>One chapter ends.<br>Another begins.</h3></div>
+  <div class="timeline">
+    <div class="glass event"><b>CHAPTER 01</b><h4>The beginning</h4><p>Every great story starts somewhere. This one starts with the person you are today — and everything you are still becoming.</p></div>
+    <div class="glass event"><b>CHAPTER 02</b><h4>The people</h4><p>Through every random conversation, late-night laugh, difficult day and unforgettable plan, the right people become part of the story.</p></div>
+    <div class="glass event"><b>CHAPTER 03</b><h4>The next level</h4><p>New goals. New places. New memories. Whatever comes next, I hope you meet it with confidence and enjoy the journey.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><div class="eyebrow">04 — The countdown</div><h3>A year worth<br>celebrating.</h3></div>
+  <div class="glass count-card">
+    <div class="eyebrow">Your next 365 days start now</div>
+    <div class="count-grid">
+      <div class="time"><strong id="days">365</strong><span>Days</span></div>
+      <div class="time"><strong id="hours">00</strong><span>Hours</span></div>
+      <div class="time"><strong id="mins">00</strong><span>Minutes</span></div>
+      <div class="time"><strong id="secs">00</strong><span>Seconds</span></div>
+    </div>
+    <p style="color:var(--muted);margin-top:20px;font-size:.8rem">The clock is only here to remind you: every second of this year is yours.</p>
+  </div>
+</section>
+
+<section id="cake">
+  <div class="section-head"><div class="eyebrow">05 — Make a wish</div><h3>Your cake.<br>Your moment.</h3></div>
+  <div class="glass cake-wrap">
+    <div>
+      <div class="cake" id="cakeObj" role="button" tabindex="0" aria-label="Blow out the candles">
+        <div class="candle c1"><div class="flame"></div></div>
+        <div class="candle c2"><div class="flame"></div></div>
+        <div class="candle c3"><div class="flame"></div></div>
+        <div class="cream"></div><div class="tier top"></div><div class="tier mid"></div><div class="tier bottom"></div>
+      </div>
+      <div class="cake-note" id="cakeNote">Tap the cake to blow out the candles ✨</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><div class="eyebrow">06 — Why you’re appreciated</div><h3>Three things<br>that stand out.</h3></div>
+  <div class="reasons">
+    <div class="glass reason"><div class="num">01</div><h4>Real energy</h4><p>You know how to turn a normal moment into something people remember.</p></div>
+    <div class="glass reason"><div class="num">02</div><h4>Loyalty</h4><p>The best friendships are built on showing up — especially when it matters.</p></div>
+    <div class="glass reason"><div class="num">03</div><h4>Potential</h4><p>There is a lot ahead of you. This year is another chance to prove what you can do.</p></div>
+  </div>
+</section>
+
+<section id="surprise">
+  <div class="section-head"><div class="eyebrow">07 — One last thing</div><h3>There’s a gift<br>waiting.</h3></div>
+  <div class="glass gift">
+    <div class="giftbox" id="gift" role="button" tabindex="0" aria-label="Open the gift">
+      <div class="bow"></div><div class="lid"></div><div class="ribbon-v"></div><div class="box"></div>
+    </div>
+    <p style="color:var(--muted)">Tap the gift box.</p>
+    <div class="reveal" id="reveal">
+      <div class="quote">“May your life always be filled with reasons to smile.”</div>
+      <p>And when life gets complicated, remember that you have people around you who genuinely want to see you win. Keep your standards high, your circle real, and your dreams even bigger.</p>
+      <div style="margin-top:24px"><button class="gold-btn" id="celebrate">Celebrate Asjad 🎉</button></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
